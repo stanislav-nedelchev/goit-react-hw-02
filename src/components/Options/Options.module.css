@@ -1,0 +1,38 @@
+.optionsList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.optionsList button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  min-width: 86px;
+  height: 40px;
+  background-color: #4e75ff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin-left: 20px;
+}
+
+.optionsList button:hover {
+  background-color: #6c8cff;
+}
+
+.optionsList .onResetBtn {
+  background-color: #ff4e4e;
+}
+
+.optionsList .onResetBtn:hover {
+  background-color: #ff7070;
+}

@@ -1,26 +1,50 @@
+import { useEffect, useState } from 'react';
 import './App.css';
-
-import Profile from './components/Profile/Profile.jsx';
-import FriendList from './components/FriendList/FriendList.jsx';
-import TransactionHistory from './components/TransactionHistory/TransactionHistory.jsx';
-
-import userData from './data/userData.json';
-import friends from './data/friends.json';
-import transactions from './data/transactions.json';
+import Description from './components/Description/Description';
+import Feedback from './components/Feedback/Feedback';
+import Options from './components/Options/Options';
+import Notification from './components/Notification/Notification';
 
 function App() {
+  const [feedback, setFeedback] = useState(() => {
+    const stringifiedVal = localStorage.getItem('feedbackValue');
+    const parsedVal = JSON.parse(stringifiedVal) ?? {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
+    return parsedVal;
+  });
+
+  useEffect(() => {
+    const stringifiedValue = JSON.stringify(feedback);
+    localStorage.setItem('feedbackValue', stringifiedValue);
+  }, [feedback]);
+
+  const updateFeedback = feedbackType => {
+    setFeedback({ ...feedback, [feedbackType]: feedback[feedbackType] + 1 });
+  };
+
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+
+  const onResetBtn = () => {
+    setFeedback({ good: 0, neutral: 0, bad: 0 });
+  };
+
   return (
-    <>
-      <Profile
-        name={userData.username}
-        tag={userData.tag}
-        location={userData.location}
-        image={userData.avatar}
-        stats={userData.stats}
+    <div className="bodyWrapper">
+      <Description />
+      <Options
+        feedbackType={updateFeedback}
+        onResetBtn={onResetBtn}
+        totalFeedback={totalFeedback}
       />
-      <FriendList friends={friends} />
-      <TransactionHistory items={transactions} />
-    </>
+      {totalFeedback > 0 ? (
+        <Feedback feedback={feedback} totalFeedback={totalFeedback} />
+      ) : (
+        <Notification />
+      )}
+    </div>
   );
 }
 
