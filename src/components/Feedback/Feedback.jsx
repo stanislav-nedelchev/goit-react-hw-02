@@ -1,7 +1,4 @@
-const Feedback = ({ feedback, totalFeedback }) => {
-  const positivFeedback =
-    totalFeedback > 0 ? Math.round((feedback.good * 100) / totalFeedback) : 0;
-
+const Feedback = ({ feedback, totalFeedback, positivFeedback }) => {
   return (
     <ul>
       <li>
